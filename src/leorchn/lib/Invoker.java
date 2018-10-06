@@ -5,7 +5,7 @@
 package leorchn.lib;
 import java.lang.reflect.*;
 import java.util.*;
-import static sys.o.*;
+import static leorchn.lib.Activity1.pl;
 /**	<pre>目前要注意的地方：
 	对于返回数组的方法，需要将返回的 Object 强转为需求的数组类型才能使用
 目前已实现：

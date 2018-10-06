@@ -1,8 +1,9 @@
 package leorchn.lib;
 
-import com.LEORChn.*.R;
+import com.LEORChn.*.*;
 
 public interface Consts{
+	public static boolean DEBUG=BuildConfig.DEBUG;
 	//protected static Icon icon;
 	public static R.id id;
 	public static R.layout layout;

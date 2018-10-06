@@ -3,6 +3,7 @@ import android.app.*;
 import android.content.*;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
+import android.net.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
@@ -74,9 +75,13 @@ public abstract class Activity1 extends Activity implements Consts,MessageQueue.
 	protected ViewGroup inflateView(int id){return(ViewGroup)LayoutInflater.from(this).inflate(id,null);}
 
 	protected void startActivity(Class<?>c){startActivity(new Intent(this,c));}
+	public void openurl(String url){
+		startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)));
+	}
 	protected static boolean visible(View v){return v.getVisibility()==View.VISIBLE;}
 	protected static void visible(final View v,final boolean visible){v.post(new Runnable(){public void run(){v.setVisibility(visible?View.VISIBLE:View.GONE);}});}
-	protected static void tip(String s){Toast.makeText(App.getContext(),s,0).show();}
+	public static void tip(Object...s){new Toast1(string(s));}
+	public static void multip(Object...s){Toast1.multip(string(s));}
 	private Thread.UncaughtExceptionHandler defUeh;
 	private Activity1 This=this;//一个默认指向当前activity的指针，在内部类中使用
 	public Activity1(){
@@ -85,6 +90,7 @@ public abstract class Activity1 extends Activity implements Consts,MessageQueue.
 		Thread.setDefaultUncaughtExceptionHandler(this);
 		
 	}
+	protected void onCreate(){ super.onCreate(null); }
 	@Override protected void onCreate(Bundle sis){
 		//new Theme(this).set(); //若有需要再说
 		super.onCreate(sis);
@@ -193,4 +199,35 @@ public abstract class Activity1 extends Activity implements Consts,MessageQueue.
 		return super.onCreateOptionsMenu(menu);
 	}
 	public void onPointerCaptureChanged(boolean hasCapture){}
+}
+class Toast1 implements Runnable{ // 这个是为了解决在高版本系统连续弹出 toast 时重叠的问题
+	static long lastpost=0;
+	static Handler h;
+	CharSequence s;
+	public Toast1(String chr){
+		if(h==null) h=new Handler(Looper.getMainLooper());
+		if(chr==null || chr.length()==0) return;
+		s=chr;
+		long now=System.currentTimeMillis();
+		if(lastpost<now) lastpost=now; // 如果 lastpost 小于 now，那么把 lastpost 设为等于 now
+		h.postDelayed(this, lastpost-now);// lastpost 肯定大于等于 now
+		lastpost+=chr.length()>9?4000:2500;
+	}
+	public static void initHandler(){
+		h=new Handler(Looper.getMainLooper());
+	}
+	public void run(){
+		Toast.makeText(
+			App.getContext(),
+			s,
+			s.length()>9?
+				Toast.LENGTH_LONG:
+				Toast.LENGTH_SHORT)
+		.show();
+	}
+	static Toast mul=Toast.makeText(App.getContext(),"",Toast.LENGTH_LONG);
+	public static void multip(String s){
+		mul.setText(s);
+		mul.show();
+	}
 }
