@@ -11,12 +11,15 @@ import appforms.*;
 import java.io.*;
 import java.util.*;
 import leorchn.App;
-public abstract class Activity1 extends Activity implements Consts,MessageQueue.IdleHandler,Thread.UncaughtExceptionHandler,View.OnClickListener{
+public abstract class Activity1 extends Activity implements Consts, MessageQueue.IdleHandler, Thread.UncaughtExceptionHandler, View.OnClickListener{
 	
 	public static final String UA="User-Agent: ",
 	UA_win="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36",
 	UA_android="Mozilla/5.0 (Linux; Android 4.4.4;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Mobile Safari/537.36",
 	UA_mobilebili="Mozilla/5.0 BiliDroid/4.11.7 (bbcallen@gmail.com)";
+	
+	// 调试模式的初始值直接链接过去就行，以后想动态修改也可以直接在这改
+	public static boolean DEBUG = DEBUG_MODE_INIT; // 调试标记放在此处而不在接口中的原因是，接口中默认final，要修改就要声明数组，改起来麻烦
 	
 	public static String DIR_cache=App.getContext().getExternalCacheDir().getPath()+"/",
 	DIR_data=App.getContext().getFilesDir().getPath()+"/",
