@@ -4,8 +4,8 @@ import com.LEORChn.*.*;
 
 public interface Consts{
 	public static String DEBUG_MODE_FILE_TAG = "/sdcard/Android/_DEBUG"; // 公开出去以方便修改启动时是否直接进入调试模式
-	public static boolean DEBUG_VERSION = BuildConfig.DEBUG, // 程序是否以调试版签名运行
-		DEBUG_MODE_INIT = DEBUG_VERSION || new java.io.File(DEBUG_MODE_FILE_TAG).exists(); // 程序启动时调试模式的初始状态
+	public static boolean IS_DEBUG_VERSION = BuildConfig.DEBUG, // 程序是否以调试版签名运行
+		DEBUG_MODE_INIT = IS_DEBUG_VERSION || new java.io.File(DEBUG_MODE_FILE_TAG).exists(); // 程序启动时调试模式的初始状态
 	//protected static Icon icon;
 	public static R.id id;
 	public static R.layout layout;
