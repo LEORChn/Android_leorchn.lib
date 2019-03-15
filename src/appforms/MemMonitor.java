@@ -4,7 +4,6 @@ import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
-import leorchn.App;
 import leorchn.lib.*;
 import static leorchn.lib.Activity1.*;
 /*	usage:
@@ -37,7 +36,7 @@ public class MemMonitor extends Service1 {
 	BroadcastReceiver rec=new BroadcastReceiver(){
 		public void onReceive(Context p1, Intent p2) {
 			new Msgbox("",dumpmsg(),"【继续】","退出"){
-				void onClick(int i){
+				@Override public void onClick(int i){
 					if(i==vbno){
 						setFwindowStat(false);
 						MemMonitor.this.stopSelf();
@@ -101,6 +100,7 @@ public class MemMonitor extends Service1 {
 		fwindow=b;
 		WindowManager m=(WindowManager)getSystemService(WINDOW_SERVICE);
 		if(b){
+			if(v != null) setFwindowStat(false);
 			v=new TextView(this);
 			
 			int wflag=0,

@@ -60,10 +60,12 @@ public abstract class Activity1 extends Activity implements Consts, MessageQueue
 		*/
 	}
 //-----
+	protected <E extends Object>E getSystemService(String name, Class<E>to){ return (E)getSystemService(name); }
 	protected void btnbind(View...v){ for(View btnv:v)btnv.setOnClickListener(this); }//连续绑定多个【动态】view的点击事件到本activity
 	protected void btnbind(int...id){ for(int btnid:id)fv(btnid).setOnClickListener(this); }//连续绑定多个【静态】view的点击事件到本activity
 	abstract public void onClick(View v);//每个窗口应该都有按钮吧？
 	protected void setText(View v,String s){((TextView)v).setText(s);}
+	protected void setFocus(final EditText t){ t.post(new Runnable(){public void run(){ t.requestFocus(); getSystemService(INPUT_METHOD_SERVICE, InputMethodManager.class).showSoftInput(t, InputMethodManager.SHOW_FORCED); }}); }
 	protected void seticon(View v,android.graphics.Bitmap i){
 		if(v instanceof ImageView){ ((ImageView)v).setImageBitmap(i); }
 	}
@@ -79,7 +81,7 @@ public abstract class Activity1 extends Activity implements Consts, MessageQueue
 
 	protected void startActivity(Class<?>c){startActivity(new Intent(this,c));}
 	public void openurl(String url){
-		startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)));
+		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 	}
 	protected static boolean visible(View v){return v.getVisibility()==View.VISIBLE;}
 	protected static void visible(final View v,final boolean visible){v.post(new Runnable(){public void run(){v.setVisibility(visible?View.VISIBLE:View.GONE);}});}
