@@ -171,7 +171,7 @@ public class Invoker<T extends Object>{
 			return null;
 		}
 	}
-	class FoundConstructor{
+	public class FoundConstructor{
 		Constructor cn;
 		FoundConstructor(Constructor cns){ cn=cns; }
 		public boolean invoke(Object...param){
@@ -183,7 +183,7 @@ public class Invoker<T extends Object>{
 			}
 		}
 	}
-	class FoundMethod{
+	public class FoundMethod{
 		Method m;
 		FoundMethod(Method mt){ m=mt; }
 		public Object invoke(Object...param){
